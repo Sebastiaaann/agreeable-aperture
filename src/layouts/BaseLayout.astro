@@ -1,0 +1,53 @@
+---
+interface Props { title?: string; description?: string }
+const { title = 'Fletes Marcelo | Puerto Montt y Los Lagos', description = 'Servicio de fletes, transportes y mudanzas en Puerto Montt y la Región de Los Lagos. Rápido, seguro y confiable.' } = Astro.props as Props;
+---
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Fletes Marcelo" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content="https://www.fletesmarcelo.cl/" />
+  <meta property="og:image" content="https://www.fletesmarcelo.cl/og-image.jpg" />
+  <meta property="og:image:alt" content="Camión de Fletes Marcelo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://www.fletesmarcelo.cl/og-image.jpg" />
+  <link rel="canonical" href="https://www.fletesmarcelo.cl/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/global.css" />
+  </head>
+  <body>
+    <slot />
+    <script>
+      // Smooth scroll para anclas internas (JS puro, sin TS)
+      document.addEventListener('click', (e) => {
+        const t = e.target;
+        if (t instanceof Element && t.matches('a[href^="#"]')) {
+          const id = t.getAttribute('href');
+          if (id && id.length > 1) {
+            const el = document.querySelector(id);
+            if (el) {
+              e.preventDefault();
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        }
+      });
+    </script>
+    <script type="module">
+      // Carga directa del sistema de animaciones nativas (sin librerías externas)
+      import '../scripts/scroll-animations.js';
+    </script>
+  </body>
+</html>

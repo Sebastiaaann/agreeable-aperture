@@ -1,0 +1,16 @@
+---
+// Simple client-only handler (no backend). Could be replaced by a service (Formspree, Getform, etc.)
+---
+<section class="contact" id="contacto" data-animate="fade-up" data-duration="800">
+  <div class="container contact-wrapper" data-animate="fade-up" data-delay="80">
+    <h2 class="section-title" style="color:#fff;" data-animate="fade-up" data-delay="120">Contáctate con Nosotros</h2>
+    <form class="contact-form" id="contactForm" action="https://formspree.io/f/tu_codigo" method="POST" data-animate="zoom-in" data-delay="200">
+      <input name="name" placeholder="Nombre Completo" required autocomplete="name" />
+      <input type="email" name="email" placeholder="Correo" required autocomplete="email" />
+      <textarea name="message" placeholder="Tu consulta" required></textarea>
+      <input type="hidden" name="_subject" value="Nueva consulta desde sitio Fletes Marcelo" />
+      <button type="submit" class="btn btn-primary">Enviar Consulta</button>
+      <p style="margin:0;font-size:.75rem;opacity:.6;">Al enviar aceptas ser contactado para responder tu solicitud.</p>
+    </form>
+  </div>
+</section>

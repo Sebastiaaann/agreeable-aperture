@@ -1,0 +1,15 @@
+---
+interface Props { phone?: string; message?: string }
+const { phone = '+56984671863', message = 'Hola, necesito una cotización de flete' } = Astro.props as Props;
+const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+---
+<a href={url} class="floating-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" fill="currentColor">
+    <path d="M16.04 3c-7.18 0-13 5.82-13 13 0 2.29.6 4.52 1.74 6.49L3 29l6.7-1.75A12.95 12.95 0 0 0 16.03 29c7.18 0 13-5.82 13-13s-5.82-13-13-13Zm0 24c-2.19 0-4.33-.58-6.2-1.69l-.44-.26-3.97 1.04 1.06-3.87-.29-.4A10.97 10.97 0 0 1 5.04 16c0-6.07 4.93-11 11-11s11 4.93 11 11-4.93 11-11 11Zm6.06-8.22c-.33-.17-1.94-.96-2.24-1.07-.3-.11-.52-.17-.74.17-.22.33-.85 1.06-1.04 1.28-.19.22-.38.25-.71.08-.33-.17-1.38-.51-2.63-1.63-.97-.86-1.62-1.92-1.81-2.25-.19-.33-.02-.5.14-.67.14-.14.33-.38.49-.57.17-.19.22-.33.33-.55.11-.22.06-.41-.03-.58-.08-.17-.74-1.78-1.02-2.44-.27-.65-.55-.56-.74-.57l-.63-.01c-.22 0-.58.08-.88.41-.3.33-1.15 1.12-1.15 2.72 0 1.6 1.18 3.15 1.35 3.37.17.22 2.32 3.54 5.62 4.97.79.34 1.41.55 1.89.71.79.25 1.5.21 2.06.13.63-.09 1.94-.79 2.21-1.56.27-.77.27-1.43.19-1.56-.08-.13-.3-.22-.63-.38Z"/>
+  </svg>
+</a>
+<style>
+.floating-wa { position: fixed; z-index: 90; right: 18px; bottom: 18px; background: #25D366; color:#fff; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,.25); transition: transform .25s, box-shadow .25s; font-weight:600; }
+.floating-wa:hover { transform: scale(1.07) translateY(-2px); box-shadow:0 6px 24px rgba(0,0,0,.32); }
+@media (max-width:560px){ .floating-wa { width:52px; height:52px; right:14px; bottom:14px; } }
+</style>

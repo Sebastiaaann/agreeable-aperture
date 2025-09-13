@@ -1,0 +1,33 @@
+---
+const links = [
+  { href: '#inicio', label: 'Inicio' },
+  { href: '#servicios', label: 'Servicios' },
+  { href: '#marcelo', label: 'Marcelo' },
+  { href: '#contacto', label: 'Contacto' }
+];
+---
+<header class="site-header" data-animate="fade-down" data-duration="650" data-initial>
+  <div class="container navbar">
+  <a class="brand brand--logo" href="#inicio" aria-label="Fletes Marcelo - Ir al inicio" data-animate="fade-right" data-delay="40" data-initial>
+      <img src="/logo-fletes-marcelo.png" alt="Fletes Marcelo" width="170" height="52" decoding="async" fetchpriority="high" />
+      <span class="brand-tagline">Fletes y Transportes</span>
+    </a>
+    <nav class="nav-links" id="primaryNav">
+      {links.map(l => (<a href={l.href}>{l.label}</a>))}
+    </nav>
+    <button class="toggle-nav" id="navToggle">Menú</button>
+  </div>
+  <script>
+    const btn = document.getElementById('navToggle');
+    const nav = document.getElementById('primaryNav');
+    btn?.addEventListener('click', () => {
+      nav?.classList.toggle('open');
+      document.body.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', nav?.classList.contains('open') ? 'true' : 'false');
+    });
+    nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      document.body.classList.remove('nav-open');
+    }));
+  </script>
+</header>

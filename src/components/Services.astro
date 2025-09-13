@@ -1,0 +1,25 @@
+---
+const services = [
+  { icon: '🚚', title: 'Fletes y Mudanzas', text: 'Traslado seguro de muebles, electrodomésticos y enseres del hogar.' },
+  { icon: '🏗️', title: 'Materiales de Obra', text: 'Transporte de cemento, maderas, herramientas y más.' },
+  { icon: '📦', title: 'Encomiendas y Paquetes', text: 'Entrega y retiro de paquetes y documentos dentro de la región.' },
+  { icon: '🌄', title: 'Cobertura Regional', text: 'Puerto Montt, Alerce, Puerto Varas, Calbuco y alrededores.' },
+  { icon: '⏱️', title: 'Servicio Urgente', text: 'Coordinación rápida para traslados de última hora.' },
+  { icon: '🛡️', title: 'Carga Protegida', text: 'Cuidado especial y sujeción de artículos frágiles.' }
+];
+---
+<section class="services" id="servicios" data-animate="fade-up" data-duration="850">
+  <div class="container">
+    <h2 class="section-title" data-animate="fade-up" data-delay="80">Servicios & Especialidades</h2>
+    <div class="services-grid" data-stagger-group="services-cards" data-animate="fade-up" data-delay="120">
+      {services.map(s => (
+        <div class="service-card" data-animate="fade-up">
+          <div class="service-emoji">{s.icon}</div>
+          <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          <a href="#contacto" class="service-btn">Más información</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,43 +1,91 @@
-# Astro Starter Kit: Minimal
+# Fletes Marcelo
 
-```sh
-npm create astro@latest -- --template minimal
+Sitio web estático construido con **Astro** para presentar los servicios de transporte, fletes y mudanzas de "Fletes Marcelo" en Puerto Montt y la Región de Los Lagos (Chile).
+
+## � Estructura del Proyecto
+```
+public/
+	favicon.svg
+	global.css        # Estilos globales
+src/
+	layouts/BaseLayout.astro
+	pages/index.astro
+	components/
+		Header.astro
+		Hero.astro
+		About.astro
+		Services.astro
+		ContactForm.astro
+		Footer.astro
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🧞 Scripts
+| Comando | Descripción |
+|---------|-------------|
+| `npm install` | Instala dependencias |
+| `npm run dev` | Inicia servidor de desarrollo (http://localhost:4321) |
+| `npm run build` | Genera la versión para producción en `dist/` |
+| `npm run preview` | Previsualiza el build localmente |
 
-## 🚀 Project Structure
+## ✅ Requisitos Previos
+- Node.js 18+ (LTS recomendado)
+- npm (incluido con Node)
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+## 🚀 Inicio Rápido
+```bash
+npm install
+npm run dev
 ```
+Abre: http://localhost:4321
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🔧 Personalización Rápida
+Actualiza datos de contacto (WhatsApp, correo):
+- Buscar `569XXXXXXXX` y `fletesmarcelo@email.com` en componentes.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Imágenes:
+- Reemplaza `public/hero-placeholder.jpg` por una imagen panorámica (ej. camión / carretera). Tamaño ideal ~1800×900 comprimido.
+- Reemplaza `public/marcelo-placeholder.jpg` por la foto real (optimizar a 150–300 KB).
 
-Any static assets, like images, can be placed in the `public/` directory.
+Colores / estilos: editar variables CSS en `public/global.css`.
 
-## 🧞 Commands
+## 📬 Formulario de Contacto
+Actualmente simula el envío en el navegador. Opciones para hacerlo real:
+1. Formspree / Getform / Basin (sin backend propio).
+2. Función serverless (Netlify / Vercel) + servicio de correo (Resend, SendGrid, Mailgun).
+3. Backend propio (Node, etc.).
 
-All commands are run from the root of the project, from a terminal:
+Ejemplo con Formspree (reemplaza el formulario en `ContactForm.astro`):
+```html
+<form action="https://formspree.io/f/tu_codigo" method="POST" class="contact-form">
+	<input name="name" required />
+	<input type="email" name="email" required />
+	<textarea name="message" required></textarea>
+	<button type="submit" class="btn btn-primary">Enviar Consulta</button>
+</form>
+```
+Elimina el `<script>` de simulación al usar un servicio real.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 📦 Deploy
+| Plataforma | Notas |
+|------------|-------|
+| Netlify | Build command: `npm run build` – Publish: `dist` |
+| Vercel | Detecta Astro automáticamente |
+| GitHub Pages | Ejecutar build y subir carpeta `dist` |
 
-## 👀 Want to learn more?
+## ⚙️ Optimización Recomendada
+- Comprimir imágenes (TinyPNG / Squoosh).
+- Agregar meta tags Open Graph y favicon PNG 512x512.
+- Integrar analítica ligera (Plausible / Umami).
+- Implementar sitemap y robots.txt (Astro add integraciones si se requiere).
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## � Próximas Mejores (ideas)
+- Integrar envío real de formulario.
+- Página separada de tarifas o calculadora simple.
+- Testimonios de clientes.
+- Botón flotante de WhatsApp.
+
+## © Licencia
+Uso interno / propietario. Ajustar según se necesite.
+
+---
+Hecho con ❤️ usando Astro.
