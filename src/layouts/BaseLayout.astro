@@ -26,9 +26,45 @@ const { title = 'Fletes Marcelo | Puerto Montt y Los Lagos', description = 'Serv
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/global.css" />
+    <script type="application/ld+json">{JSON.stringify({
+      '@context':'https://schema.org',
+      '@type':'LocalBusiness',
+      name:'Fletes Marcelo',
+      image:'https://www.fletesmarcelo.cl/og-image.jpg',
+      '@id':'https://www.fletesmarcelo.cl/#negocio',
+      url:'https://www.fletesmarcelo.cl/',
+      telephone:'+56 9 8467 1863',
+      address:{
+        '@type':'PostalAddress',
+        addressLocality:'Puerto Montt',
+        addressRegion:'Los Lagos',
+        addressCountry:'CL'
+      },
+      areaServed:['Puerto Montt','Puerto Varas','Calbuco','Alerce','Región de Los Lagos'],
+      priceRange:'$$',
+      description:description
+    })}</script>
+    <!-- FAQ Schema se inyecta más abajo tras slot para asegurar que las preguntas existan -->
   </head>
   <body>
+  <!-- Barra de progreso con pista visible -->
+  <div id="scroll-progress" aria-hidden="true"><span class="bar"></span></div>
     <slot />
+    <script type="application/ld+json" id="faq-schema">{JSON.stringify({
+      '@context':'https://schema.org',
+      '@type':'FAQPage',
+      mainEntity:[
+        { '@type':'Question', name:'¿Con cuánta anticipación debo reservar?', acceptedAnswer:{ '@type':'Answer', text:'Idealmente 24-48 horas antes, pero podemos evaluar urgencias según disponibilidad.' }},
+        { '@type':'Question', name:'¿Cobran por volumen o por distancia?', acceptedAnswer:{ '@type':'Answer', text:'La cotización considera ambos factores (volumen aproximado y kilómetros), más condiciones especiales.' }},
+        { '@type':'Question', name:'¿Realizan traslados entre ciudades?', acceptedAnswer:{ '@type':'Answer', text:'Sí, cubrimos principalmente la Región de Los Lagos y coordinamos trayectos interurbanos.' }},
+        { '@type':'Question', name:'¿Cómo protegen la carga?', acceptedAnswer:{ '@type':'Answer', text:'Utilizamos mantas, sujeciones y manipulación cuidadosa para minimizar cualquier riesgo.' }},
+        { '@type':'Question', name:'¿Puedo cambiar la fecha luego de agendar?', acceptedAnswer:{ '@type':'Answer', text:'Sí, mientras se avise con la mayor anticipación posible para reprogramar recursos.' }}
+      ]
+    })}</script>
+    <div class="mobile-cta-bar" aria-label="Acciones rápidas" role="navigation">
+      <a href="https://wa.me/56984671863" target="_blank" rel="noopener" class="cta-secondary" aria-label="Contactar por WhatsApp">💬 WhatsApp</a>
+      <a href="#contacto" class="cta-primary" aria-label="Ir al formulario de cotización">📦 Cotizar</a>
+    </div>
     <script>
       // Smooth scroll para anclas internas (JS puro, sin TS)
       document.addEventListener('click', (e) => {
@@ -48,6 +84,36 @@ const { title = 'Fletes Marcelo | Puerto Montt y Los Lagos', description = 'Serv
     <script type="module">
       // Carga directa del sistema de animaciones nativas (sin librerías externas)
       import '../scripts/scroll-animations.js';
+      // Efectos de interacción (scroll progress, shrink header, back-to-top, counters)
+  import '/scripts/interaction-effects.js';
+      // Scroll Spy: resalta enlace activo según sección visible
+      const sections = [
+        '#inicio', '#servicios', '#marcelo', '#contacto'
+      ].map(sel => document.querySelector(sel)).filter(Boolean);
+      const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+      const map = new Map();
+      navLinks.forEach(a => { const href = a.getAttribute('href'); if(href && href.startsWith('#')) map.set(href, a); });
+      let current;
+      const spyObserver = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if(en.isIntersecting){
+            const id = '#'+en.target.id;
+            if(map.has(id)){
+              if(current) current.classList.remove('active');
+              const link = map.get(id);
+              link.classList.add('active');
+              current = link;
+            }
+          }
+        });
+      }, { threshold: 0.4 });
+      sections.forEach(sec => spyObserver.observe(sec));
+      // Fallback: si al cargar estamos en medio de la página
+      requestAnimationFrame(()=>{
+        let best=null, bestOffset=Infinity;
+        sections.forEach(sec=>{ const box=sec.getBoundingClientRect(); if(box.top>=0 && box.top<bestOffset){ best=sec; bestOffset=box.top; }});
+        if(best){ const link = map.get('#'+best.id); if(link){ link.classList.add('active'); current=link; }}
+      });
     </script>
   </body>
 </html>

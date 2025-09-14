@@ -1,0 +1,28 @@
+---
+// Componente: BenefitChips
+// Muestra una hilera / wrap de chips destacando beneficios clave.
+interface Chip { label: string; icon?: string }
+const chips: Chip[] = [
+  { label: 'Cobertura Los Lagos', icon: '🌐' },
+  { label: 'Cotización rápida', icon: '⚡' },
+  { label: 'Equipo confiable', icon: '🤝' },
+  { label: 'Puntualidad garantizada', icon: '⏱️' },
+];
+---
+<section class="benefit-chips" aria-label="Beneficios destacados">
+  <div class="benefit-chips__inner">
+    {chips.map((c, i) => (
+      <div class="chip" data-animate="fade-up" data-stagger-group="chips" data-delay={String(i * 20)}>
+        {c.icon && <span class="chip-ico" aria-hidden="true">{c.icon}</span>}
+        <span class="chip-label">{c.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+<style>
+  .benefit-chips { padding: 1.2rem 0 0.6rem; }
+  .benefit-chips__inner { display:flex; flex-wrap:wrap; gap:.65rem; justify-content:center; }
+  .chip { --bg:#ffffff; --bd:rgba(0,0,0,.12); --txt:#1d2129; display:inline-flex; align-items:center; gap:.45rem; padding:.55rem .85rem; background:var(--bg); border:1px solid var(--bd); border-radius:999px; font-size:.78rem; font-weight:600; letter-spacing:.25px; box-shadow:0 2px 4px rgba(0,0,0,.06); position:relative; }
+  .chip-ico { font-size:.9rem; line-height:1; }
+  @media (prefers-reduced-motion:reduce){ .chip { transition:none; } }
+</style>

@@ -1,0 +1,30 @@
+---
+// Componente: MetricsStrip
+// Muestra métricas clave en formato semántico DL.
+interface Metric { value: string; label: string; }
+const metrics: Metric[] = [
+  { value: '8+', label: 'Años de experiencia' },
+  { value: '2500+', label: 'Viajes completados' },
+  { value: '98%', label: 'Clientes satisfechos' },
+  { value: '24', label: 'Respuesta máx. (h)' },
+];
+---
+<section class="metrics" aria-label="Indicadores del servicio">
+  <div class="metrics__inner">
+    {metrics.map((m,i) => (
+      <div class="metric" data-animate="zoom-in" data-stagger-group="metrics" data-delay={String(i*30)}>
+        <dt class="metric-value" data-counter={m.value}>{m.value}</dt>
+        <dd class="metric-label">{m.label}</dd>
+      </div>
+    ))}
+  </div>
+</section>
+<style>
+  .metrics { padding:2.2rem 0 1.2rem; }
+  .metrics__inner { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1.6rem; max-width:1000px; margin:0 auto; }
+  .metric { text-align:center; background:#fff; padding:1.4rem 1rem 1.3rem; border:1px solid rgba(0,0,0,.08); border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,.06); }
+  .metric-value { font-size:1.9rem; font-weight:700; margin:0 0 .35rem; font-family:'Montserrat',sans-serif; letter-spacing:.5px; color:#1c2130; }
+  .metric-label { margin:0; font-size:.8rem; font-weight:600; letter-spacing:.5px; text-transform:uppercase; color:#555; }
+  .metric-value, .metric-label { display:block; }
+  @media (max-width:620px){ .metrics__inner { gap:1rem; } .metric { padding:1.1rem .8rem; } .metric-value { font-size:1.6rem; } }
+</style>

@@ -1,0 +1,34 @@
+---
+// Componente: Features (Diferenciales)
+interface Feature { title: string; desc: string; icon: string }
+const features: Feature[] = [
+  { title: 'Planificación flexible', desc: 'Ajustamos horarios y rutas según tus necesidades logísticas.', icon: '🗓️' },
+  { title: 'Protección de carga', desc: 'Materiales y manipulación cuidada para evitar daños.', icon: '🛡️' },
+  { title: 'Rastreo y confirmación', desc: 'Comunicación clara antes, durante y después del traslado.', icon: '📍' },
+  { title: 'Tarifas transparentes', desc: 'Cotizaciones claras sin costos ocultos de última hora.', icon: '💬' },
+];
+---
+<section class="features" aria-labelledby="features-title">
+  <div class="container">
+    <h2 id="features-title" class="section-title" data-animate="fade-up" data-initial>¿Por qué elegirnos?</h2>
+    <div class="features-grid">
+      {features.map((f,i) => (
+        <article class="feature-card" data-animate="fade-up" data-stagger-group="features" data-delay={String(i*40)}>
+          <div class="feature-ico" aria-hidden="true">{f.icon}</div>
+          <h3 class="feature-title">{f.title}</h3>
+          <p class="feature-desc">{f.desc}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .features { padding: 3.5rem 0 2.5rem; background:#fff; }
+  .features-grid { display:grid; gap:1.8rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+  .feature-card { background:#f9f9fa; border:1px solid rgba(0,0,0,.06); padding:1.4rem 1.2rem 1.5rem; border-radius:14px; box-shadow:0 3px 8px rgba(0,0,0,.05); position:relative; transition:transform .35s, box-shadow .35s; }
+  .feature-card:hover { transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.09); }
+  .feature-ico { font-size:1.9rem; margin-bottom:.6rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.15)); }
+  .feature-title { margin:.2rem 0 .4rem; font-size:1.05rem; letter-spacing:.3px; font-weight:700; color:#1c2130; }
+  .feature-desc { margin:0; font-size:.85rem; line-height:1.4; color:#444; }
+  @media (max-width:620px){ .features { padding:3rem 0 2rem; } }
+</style>

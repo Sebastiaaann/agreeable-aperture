@@ -1,0 +1,224 @@
+---
+// Componente: FAQ (Preguntas frecuentes con acordeón accesible)
+interface QA { q: string; a: string }
+const faqs: QA[] = [
+  { q: '¿Con cuánta anticipación debo reservar?', a: 'Idealmente 24-48 horas antes, pero podemos evaluar urgencias según disponibilidad.' },
+  { q: '¿Cobran por volumen o por distancia?', a: 'La cotización considera ambos factores (volumen aproximado y kilómetros), más condiciones especiales.' },
+  { q: '¿Realizan traslados entre ciudades?', a: 'Sí, cubrimos principalmente la Región de Los Lagos y coordinamos trayectos interurbanos.' },
+  { q: '¿Cómo protegen la carga?', a: 'Utilizamos mantas, sujeciones y manipulación cuidadosa para minimizar cualquier riesgo.' },
+  { q: '¿Puedo cambiar la fecha luego de agendar?', a: 'Sí, mientras se avise con la mayor anticipación posible para reprogramar recursos.' },
+];
+---
+<section class="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <h2 id="faq-title" class="section-title" data-animate="fade-up">Preguntas frecuentes</h2>
+    <div class="faq-search" data-animate="fade-up" data-delay="60">
+      <input type="search" id="faqFilter" placeholder="Buscar pregunta..." aria-label="Filtrar preguntas frecuentes" />
+      <button type="button" id="faqClear" aria-label="Limpiar filtro" hidden>×</button>
+    </div>
+    <div class="faq-meta" aria-live="polite">
+      <span id="faqCount" class="faq-count"></span>
+      <button type="button" id="faqToggleAll" class="faq-toggle-all" aria-expanded="false">Expandir todo</button>
+    </div>
+    <div class="faq-list" role="list">
+      {faqs.map((item,i) => {
+        const opened = i === 0; // abrir primera
+        return (
+          <div class="faq-item" data-animate="fade-up" data-stagger-group="faq" data-delay={String(i*40)}>
+            <h3 class="faq-q">
+              <button class="faq-btn" aria-expanded={opened ? 'true':'false'} aria-controls={`faq-panel-${i}`} id={`faq-control-${i}`} data-faq-btn data-faq-index={String(i)}>
+                <span class="faq-btn__text">{item.q}</span>
+                <span class="faq-btn__ico" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="faq-panel" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-control-${i}`} {...(opened ? {} : { hidden: true })} style={opened ? 'max-height:300px;' : ''}>
+              <p class="faq-a">{item.a}</p>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  </div>
+</section>
+<style>
+  .faq { padding:4rem 0 3.2rem; background:#f5f6f8; }
+  .faq-list { max-width:860px; margin:1.2rem auto 0; display:grid; gap:1rem; }
+  .faq-search { max-width:860px; margin:.3rem auto 0; display:flex; gap:.6rem; }
+  .faq-search input { flex:1; padding:.75rem .85rem; border:1px solid rgba(0,0,0,.15); border-radius:10px; font:inherit; font-size:.9rem; background:#fff; box-shadow:0 2px 4px rgba(0,0,0,.05) inset; }
+  .faq-search input:focus { outline:2px solid #c2b280; outline-offset:2px; }
+  .faq-search button { border:none; background:#1c2130; color:#fff; width:44px; border-radius:10px; font-size:1.1rem; cursor:pointer; font-weight:600; display:flex; align-items:center; justify-content:center; }
+  .faq-search button:hover { background:#232a3c; }
+  .faq-meta { max-width:860px; margin:.6rem auto 0; display:flex; align-items:center; justify-content:space-between; font-size:.75rem; color:#4b515a; gap:.75rem; flex-wrap:wrap; }
+  .faq-count { background:#e9eaec; padding:.4rem .7rem; border-radius:20px; font-weight:500; letter-spacing:.3px; }
+  .faq-toggle-all { border:none; background:#1c2130; color:#fff; padding:.55rem .95rem; border-radius:10px; font-size:.7rem; font-weight:600; letter-spacing:.5px; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,.12); }
+  .faq-toggle-all:hover { background:#232a3c; }
+  .faq-item { position:relative; background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:14px; box-shadow:0 3px 10px rgba(0,0,0,.05); overflow:hidden; transition:border-color .35s, box-shadow .35s; }
+  .faq-item::before { content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:linear-gradient(180deg,#c2b280,#e3d6b6); opacity:0; transform:scaleY(0); transform-origin:top; transition:opacity .4s, transform .4s cubic-bezier(.65,.05,.36,1); }
+  .faq-item.is-open { border-color:rgba(0,0,0,.18); box-shadow:0 6px 18px rgba(0,0,0,.10); }
+  .faq-item.is-open::before { opacity:1; transform:scaleY(1); }
+  .faq-item.is-hidden { display:none; }
+  .faq-highlight { background:linear-gradient(90deg,#fff7e2,#ffffff); padding:0 .15rem; border-radius:4px; }
+  .faq-btn { all:unset; cursor:pointer; display:flex; align-items:center; width:100%; justify-content:space-between; gap:.9rem; padding:1.05rem 1.1rem 1rem 1.1rem; font-weight:600; font-size:.92rem; letter-spacing:.3px; color:#1c2130; line-height:1.3; box-sizing:border-box; overflow:hidden; }
+  .faq-btn:focus-visible { outline:2px solid #c2b280; outline-offset:3px; border-radius:8px; }
+  .faq-btn__text { flex:1; text-align:left; }
+  .faq-btn__ico { font-weight:700; transition:transform .35s, background .35s; display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; min-width:22px; border-radius:6px; background:#1c2130; color:#fff; font-size:.85rem; position:relative; flex-shrink:0; }
+  .faq-btn[aria-expanded="true"] .faq-btn__ico { transform:rotate(180deg); background:#2a3140; }
+  .faq-btn[aria-expanded="true"] .faq-btn__ico::after { content:'−'; }
+  .faq-btn__ico::after { content:'+'; }
+  .faq-panel { padding:0 1.1rem 0 1.1rem; font-size:.85rem; line-height:1.52; color:#3d434c; transition:max-height .38s cubic-bezier(.65,.05,.36,1), padding .25s; max-height:0; overflow:hidden; }
+  .faq-panel:not([hidden]) { padding:0 1.1rem 1.15rem 1.1rem; }
+  .faq-item.is-open .faq-panel { }
+  .faq-a { margin:1rem 0 0; }
+  @media (max-width:640px){ .faq { padding:3.2rem 0 2.7rem; } }
+  @media (prefers-reduced-motion:reduce){ .faq-panel { transition:none; } .faq-btn__ico { transition:none; } }
+</style>
+<script>
+  // @ts-nocheck
+  // Script aislado para comportamiento FAQ (no depende de frameworks)
+  // Nota: Astro hoistea los <script> inline al <head>, por lo que document.currentScript.closest('.faq') puede ser null.
+  // Usamos inicialización diferida en DOMContentLoaded para asegurar que el DOM esté listo.
+  function initFAQ(){
+    const root = document.querySelector('section.faq');
+    if(!root) return;
+    const items = Array.from(root.querySelectorAll('.faq-item')) as HTMLDivElement[];
+    const buttons = Array.from(root.querySelectorAll('[data-faq-btn]')) as HTMLButtonElement[];
+    // marcar abiertos iniciales
+    buttons.forEach(btn=>{ if(btn.getAttribute('aria-expanded')==='true'){ btn.closest('.faq-item')?.classList.add('is-open'); }});
+  /**
+   * @param {HTMLButtonElement} btn
+   */
+  function closePanel(btn){
+      const index = btn.getAttribute('data-faq-index');
+      const panel = root!.querySelector(`#faq-panel-${index}`) as HTMLDivElement | null;
+      if(panel && !panel.hasAttribute('hidden')){
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        requestAnimationFrame(()=>{ panel.style.maxHeight='0px'; });
+        setTimeout(()=>{ panel.setAttribute('hidden',''); }, 320);
+      }
+      btn.setAttribute('aria-expanded','false');
+      btn.closest('.faq-item')?.classList.remove('is-open');
+    }
+  /**
+   * @param {HTMLButtonElement} btn
+   */
+  function openPanel(btn){
+      const index = btn.getAttribute('data-faq-index');
+      const panel = root!.querySelector(`#faq-panel-${index}`) as HTMLDivElement | null;
+      if(panel){
+        panel.removeAttribute('hidden');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+      btn.setAttribute('aria-expanded','true');
+      btn.closest('.faq-item')?.classList.add('is-open');
+    }
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded')==='true';
+        if(!expanded){
+          openPanel(btn);
+          // auto scroll si el panel extendido queda parcialmente fuera
+          requestAnimationFrame(()=>{
+            const rect = btn.closest('.faq-item')?.getBoundingClientRect();
+            if(rect && (rect.top < 0 || rect.bottom > window.innerHeight)){
+              btn.closest('.faq-item')?.scrollIntoView({behavior:'smooth', block:'start'});
+            }
+          });
+        } else {
+          closePanel(btn);
+        }
+      });
+    });
+
+    // Filtro de búsqueda + funciones auxiliares
+    const input = document.getElementById('faqFilter') as HTMLInputElement | null;
+    const clearBtn = document.getElementById('faqClear') as HTMLButtonElement | null;
+    const countEl = document.getElementById('faqCount') as HTMLSpanElement | null;
+    const toggleAllBtn = document.getElementById('faqToggleAll') as HTMLButtonElement | null;
+    const total = items.length;
+    const LS_KEY = 'faq-open-indexes-v1';
+    // Persistencia: cargar índices abiertos previos
+    let stored: number[] = [];
+    try { stored = JSON.parse(localStorage.getItem(LS_KEY)||'[]')||[]; } catch(e){ stored = []; }
+    if(stored.length){
+      // abrir los almacenados (si existen)
+      stored.forEach(idx => {
+        const btn = buttons.find(b => b.getAttribute('data-faq-index')===String(idx));
+        if(btn && btn.getAttribute('aria-expanded')!=='true') openPanel(btn);
+      });
+    }
+    // Conjunto de abiertos para sincronizar
+    function getOpenSet(){ return new Set<number>(buttons.filter(b => b.getAttribute('aria-expanded')==='true').map(b => Number(b.getAttribute('data-faq-index')))); }
+    function saveOpen(){ const arr = Array.from(getOpenSet()); localStorage.setItem(LS_KEY, JSON.stringify(arr)); }
+    function normalize(t:string){ return t.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,''); }
+    function removeHighlights(el:HTMLElement){ el.querySelectorAll('.faq-highlight').forEach(span=>{ const parent=span.parentNode; if(parent){ parent.replaceChild(document.createTextNode(span.textContent||''), span); parent.normalize(); }}); }
+    function highlight(el:HTMLElement, term:string){
+      if(!term) return;
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      const parts: Text[] = [];
+      while(walker.nextNode()){
+        const node = walker.currentNode as Text;
+        if(node.parentElement && node.parentElement.classList.contains('faq-btn__text')) parts.push(node);
+      }
+      parts.forEach(node => {
+        const original = node.textContent||'';
+        const lower = normalize(original);
+        const idx = lower.indexOf(term);
+        if(idx>-1){
+          const range = document.createRange();
+          range.setStart(node, idx);
+          range.setEnd(node, idx+term.length);
+          const mark = document.createElement('span');
+          mark.className='faq-highlight';
+          range.surroundContents(mark);
+        }
+      });
+    }
+    function updateCount(){ if(!countEl) return; const visible = items.filter(i=>!i.classList.contains('is-hidden')).length; countEl.textContent = `Mostrando ${visible} de ${total}`; }
+    function syncToggleAllLabel(){ if(!toggleAllBtn) return; const visibleItems = items.filter(i=>!i.classList.contains('is-hidden')); const allOpen = visibleItems.every(i=>i.querySelector('.faq-btn')!.getAttribute('aria-expanded')==='true'); toggleAllBtn.textContent = allOpen ? 'Colapsar todo' : 'Expandir todo'; toggleAllBtn.setAttribute('aria-expanded', String(allOpen)); }
+    function applyFilter(){
+      if(!input) return;
+      const valNorm = normalize(input.value.trim());
+      if(clearBtn) clearBtn.hidden = !valNorm;
+      items.forEach(item => {
+        removeHighlights(item);
+        if(!valNorm){ item.classList.remove('is-hidden'); }
+        else {
+          const text = normalize(item.querySelector('.faq-btn__text')?.textContent||'');
+            const match = text.includes(valNorm);
+            item.classList.toggle('is-hidden', !match);
+            if(match) highlight(item, valNorm);
+        }
+        // si estaba abierto y permanece visible, asegurar altura correcta (por si filtrado previo dejó max-height en 0)
+        const btn = item.querySelector('.faq-btn');
+        const panel = item.querySelector('.faq-panel') as HTMLDivElement | null;
+        if(btn && btn.getAttribute('aria-expanded')==='true' && !item.classList.contains('is-hidden') && panel){
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+      updateCount();
+      syncToggleAllLabel();
+    }
+    // Debounce 150ms
+    let fTimer: number|undefined;
+    input?.addEventListener('input', () => { window.clearTimeout(fTimer); fTimer = window.setTimeout(applyFilter, 150); });
+    clearBtn?.addEventListener('click', ()=>{ if(input){ input.value=''; input.focus(); applyFilter(); } });
+    toggleAllBtn?.addEventListener('click', () => {
+      const visibleItems = items.filter(i=>!i.classList.contains('is-hidden'));
+      const allOpen = visibleItems.every(i=> i.querySelector('.faq-btn')!.getAttribute('aria-expanded')==='true');
+      visibleItems.forEach(i => {
+        const btn = i.querySelector('.faq-btn') as HTMLButtonElement | null;
+        if(!btn) return;
+        if(allOpen) closePanel(btn); else if(btn.getAttribute('aria-expanded')!=='true') openPanel(btn);
+      });
+      saveOpen();
+      syncToggleAllLabel();
+    });
+    // Hook into open/close to persist & update labels
+    buttons.forEach(b => b.addEventListener('click', () => { saveOpen(); syncToggleAllLabel(); updateCount(); }));
+    // Inicializar contador y label
+    applyFilter();
+    updateCount();
+    syncToggleAllLabel();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initFAQ); else initFAQ();
+</script>

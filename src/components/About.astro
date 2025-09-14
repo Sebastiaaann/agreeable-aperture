@@ -4,27 +4,22 @@
 
 <section class="about" id="marcelo" data-animate="fade-up" data-duration="800">
   <div class="container about-inner" data-animate="fade-up" data-delay="60">
-    <div class="about-card" data-animate="fade-right" data-delay="120">
+    <div class="about-card about-card--media" data-animate="fade-right" data-delay="120">
       <div class="badge-name">Don Marcelo</div>
-      <picture>
-        <source
-          srcset="/profile1.jpg, /marcelo-placeholder-400.webp 400w"
-          type="image/webp"
-        />
-        <source
-          srcset="/marcelo-placeholder-600.jpg 600w, /marcelo-placeholder-400.jpg 400w"
-          type="image/jpeg"
-        />
-        <img
-          src="/profile1.jpg"
-          alt="Foto de Marcelo"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="533"
-          style="width:100%;border-radius:12px;aspect-ratio:3/4;object-fit:cover;background:#ddd;"
-        />
-      </picture>
+      <div class="about-photo-wrapper">
+        <picture>
+          <img
+            src="/profile1.jpg"
+            alt="Foto de Marcelo trabajando en transporte"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="800"
+            sizes="(max-width:600px) 88vw, 480px"
+            style="object-fit:cover; object-position:center;"
+          />
+        </picture>
+      </div>
     </div>
     <div class="about-text" data-animate="fade-left" data-delay="140">
       <h2 class="about-heading" data-animate="fade-up" data-delay="160">Sobre Don Marcelo</h2>
@@ -87,4 +82,19 @@
     </div>
   </div>
 </section>
+<style>
+/* Ajustes específicos de la tarjeta con foto */
+.about-card--media { padding:1rem 1rem 2.6rem; display:flex; flex-direction:column; }
+.about-photo-wrapper { position:relative; border-radius:18px; overflow:hidden; aspect-ratio:3/4; background:linear-gradient(135deg,#f1f1f1,#e5e5e5); box-shadow:0 6px 26px -6px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.15); }
+.about-photo-wrapper picture, .about-photo-wrapper img { width:100%; height:100%; display:block; }
+.about-card--media .badge-name { left:1rem; bottom:1rem; background:var(--color-accent); color:#1c2130; box-shadow:0 3px 10px rgba(0,0,0,.25); font-size:.78rem; }
+@media (max-width:740px){
+  .about-card--media { max-width:440px; margin:0 auto; }
+}
+@media (max-width:520px){
+  .about-card--media { padding:.8rem .8rem 2.4rem; }
+  .about-photo-wrapper { border-radius:16px; }
+  .about-card--media .badge-name { font-size:.72rem; padding:.5rem .65rem .45rem; }
+}
+</style>
 

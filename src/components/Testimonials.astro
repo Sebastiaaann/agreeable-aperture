@@ -1,0 +1,32 @@
+---
+// Componente: Testimonials (Testimonios simples en grid)
+interface Testimonial { quote: string; author: string; tag?: string }
+const testimonials: Testimonial[] = [
+  { quote: 'Servicio impecable, llegaron antes de la hora y protegieron cada caja.', author: 'Carla M.' },
+  { quote: 'Necesitaba un traslado urgente y respondieron de inmediato.', author: 'Jorge P.' },
+  { quote: 'Precio justo y comunicación clara en todo momento.', author: 'Andrea R.' },
+  { quote: 'Rápidos y muy cuidadosos con muebles delicados.', author: 'Luis F.' },
+];
+---
+<section class="testimonials" aria-labelledby="testimonials-title">
+  <div class="container">
+    <h2 id="testimonials-title" class="section-title" data-animate="fade-up">Lo que dicen nuestros clientes</h2>
+    <div class="testimonials-grid">
+      {testimonials.map((t,i) => (
+        <figure class="testimonial" data-animate="scale-in" data-stagger-group="testimonials" data-delay={String(i*50)}>
+          <blockquote class="testimonial-quote">“{t.quote}”</blockquote>
+          <figcaption class="testimonial-author">{t.author}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .testimonials { padding:4rem 0 3.4rem; background:#1c2130; color:#fff; position:relative; }
+  .testimonials::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 75% 20%, rgba(255,255,255,.08), transparent 60%); pointer-events:none; }
+  .testimonials-grid { display:grid; gap:1.8rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); position:relative; }
+  .testimonial { margin:0; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); padding:1.3rem 1rem 1.4rem; border-radius:16px; box-shadow:0 4px 14px rgba(0,0,0,.35); backdrop-filter:blur(6px); position:relative; }
+  .testimonial-quote { font-size:.9rem; line-height:1.5; margin:0 0 .8rem; letter-spacing:.25px; }
+  .testimonial-author { font-size:.75rem; font-weight:600; letter-spacing:.5px; text-transform:uppercase; opacity:.85; }
+  @media (max-width:680px){ .testimonials { padding:3.2rem 0 2.8rem; } .testimonials-grid { gap:1.2rem; } }
+</style>
