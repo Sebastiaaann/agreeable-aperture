@@ -5,6 +5,13 @@ const links = [
   { href: '#marcelo', label: 'Marcelo' },
   { href: '#contacto', label: 'Contacto' }
 ];
+
+// Props para personalizar el botón de WhatsApp desde donde se use este header
+interface Props { phone?: string; message?: string }
+const { phone = '+56984671863', message = 'Hola, necesito una cotización de flete' } = Astro.props as Props;
+// WhatsApp exige solo números en el enlace (sin + ni espacios)
+const sanitizedPhone = phone.replace(/[^0-9]/g, '');
+const waUrl = `https://wa.me/${sanitizedPhone}?text=${encodeURIComponent(message)}`;
 ---
 <header class="site-header site-header--pill-dark" data-animate="fade-down" data-duration="650" data-initial>
   <div class="header-shell-dark">
@@ -43,7 +50,7 @@ const links = [
         <div class="nav-panel__col nav-panel__col--actions">
           <div class="nav-panel__actions">
             <a class="panel-btn panel-btn--primary" href="#contacto">Cotizar</a>
-            <a class="panel-btn panel-btn--whatsapp" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="panel-btn panel-btn--whatsapp" href={waUrl} target="_blank" rel="noopener" aria-label={`Abrir WhatsApp con número ${phone}`}>WhatsApp</a>
           </div>
         </div>
       </div>
